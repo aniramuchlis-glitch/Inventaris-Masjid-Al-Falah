@@ -27,7 +27,7 @@ header {
   gap: 25px;
 }
 
-/* LOGO BESAR */
+/* LOGO */
 .logo {
   width: 120px;
   height: 120px;
@@ -119,13 +119,14 @@ tr:hover {
 /* GRAFIK */
 canvas {
   max-width: 100%;
+  height: 350px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🔐 CEK LOGIN (WAJIB) -->
+<!-- 🔐 CEK LOGIN -->
 <script>
 if (localStorage.getItem("login") !== "true") {
   window.location.href = "login.html";
@@ -134,7 +135,7 @@ if (localStorage.getItem("login") !== "true") {
 
 <header>
   <div class="header-content">
-    <img src="logo.jpeg" class="logo">
+    <img src="logo.jpeg" class="logo" alt="Logo Masjid Al-Falah">
     <div>
       <h1>Dashboard Inventaris Masjid Al-Falah</h1>
       <p>Sistem Informasi Inventaris & Kegiatan Masjid</p>
@@ -150,6 +151,7 @@ if (localStorage.getItem("login") !== "true") {
 </header>
 
 <div class="container">
+
   <!-- DESKRIPSI -->
   <div class="card deskripsi" id="deskripsi">
     <h2>Tentang Masjid Al-Falah</h2>
@@ -217,8 +219,9 @@ document.addEventListener("DOMContentLoaded", function () {
         for (let i = 0; i < text.length; i++) {
           const char = text[i];
 
-          if (char === '"') insideQuotes = !insideQuotes;
-          else if ((char === ',' || char === ';') && !insideQuotes) {
+          if (char === '"') {
+            insideQuotes = !insideQuotes;
+          } else if (char === ',' && !insideQuotes) {
             row.push(cell.trim());
             cell = "";
           } else if (char === '\n' && !insideQuotes) {
@@ -230,8 +233,10 @@ document.addEventListener("DOMContentLoaded", function () {
             cell += char;
           }
         }
-        if (cell) row.push(cell.trim());
-        if (row.length) rows.push(row);
+        if (row.length) {
+          row.push(cell.trim());
+          rows.push(row);
+        }
         return rows;
       }
 
@@ -239,24 +244,22 @@ document.addEventListener("DOMContentLoaded", function () {
       const table = document.getElementById("tabel");
 
       let total = 0;
-      let labels = [];
-      let dataJumlah = [];
+      let map = {};
 
       for (let i = 1; i < rows.length; i++) {
         const [tanggal, nama, jumlahRaw, kondisi] = rows[i];
         if (!tanggal || !nama) continue;
 
-        const jumlah = parseInt(jumlahRaw.replace(/\D/g, "")) || 0;
+        const jumlah = parseInt((jumlahRaw || "").replace(/\D/g, "")) || 0;
 
-        const row = table.insertRow();
-        row.insertCell(0).innerText = tanggal;
-        row.insertCell(1).innerText = nama;
-        row.insertCell(2).innerText = jumlah;
-        row.insertCell(3).innerText = kondisi;
+        const tr = table.insertRow();
+        tr.insertCell(0).innerText = tanggal;
+        tr.insertCell(1).innerText = nama;
+        tr.insertCell(2).innerText = jumlah;
+        tr.insertCell(3).innerText = kondisi || "-";
 
         total += jumlah;
-        labels.push(nama);
-        dataJumlah.push(jumlah);
+        map[nama] = (map[nama] || 0) + jumlah;
       }
 
       document.getElementById("total").innerText = total;
@@ -264,30 +267,22 @@ document.addEventListener("DOMContentLoaded", function () {
       new Chart(document.getElementById("grafik"), {
         type: "bar",
         data: {
-          labels,
+          labels: Object.keys(map),
           datasets: [{
             label: "Jumlah Inventaris",
-            data: dataJumlah,
+            data: Object.values(map),
             backgroundColor: "#f9a825"
           }]
         },
-        options: { responsive: true }
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
       });
 
     })
     .catch(err => console.error(err));
 });
-</script>
-<script>
-const isLogin = localStorage.getItem("login");
-const fromLogin = sessionStorage.getItem("fromLogin");
-
-if (isLogin !== "true" || fromLogin !== "true") {
-  localStorage.removeItem("login");
-  window.location.href = "login.html";
-} else {
-  sessionStorage.removeItem("fromLogin");
-}
 </script>
 
 </body>
