@@ -150,7 +150,6 @@ if (localStorage.getItem("login") !== "true") {
 </header>
 
 <div class="container">
-
   <!-- DESKRIPSI -->
   <div class="card deskripsi" id="deskripsi">
     <h2>Tentang Masjid Al-Falah</h2>
@@ -278,6 +277,17 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .catch(err => console.error(err));
 });
+</script>
+<script>
+const isLogin = localStorage.getItem("login");
+const fromLogin = sessionStorage.getItem("fromLogin");
+
+if (isLogin !== "true" || fromLogin !== "true") {
+  localStorage.removeItem("login");
+  window.location.href = "login.html";
+} else {
+  sessionStorage.removeItem("fromLogin");
+}
 </script>
 
 </body>

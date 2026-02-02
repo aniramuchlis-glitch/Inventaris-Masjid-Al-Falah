@@ -96,12 +96,12 @@ button {
 
   <div class="input-group">
     <label>Username</label>
-    <input type="text" id="username">
+    <input type="text" id="username" placeholder="Masukkan username">
   </div>
 
   <div class="input-group">
     <label>Password</label>
-    <input type="password" id="password">
+    <input type="password" id="password" placeholder="Masukkan password">
   </div>
 
   <button onclick="login()">Masuk</button>
@@ -114,11 +114,17 @@ button {
 
 <script>
 function login() {
-  const user = document.getElementById("username").value;
-  const pass = document.getElementById("password").value;
+  const user = document.getElementById("username").value.trim();
+  const pass = document.getElementById("password").value.trim();
+
+  if (user === "" || pass === "") {
+    alert("Username dan password wajib diisi!");
+    return;
+  }
 
   if (user === "Alfalah" && pass === "Alfalah151") {
     localStorage.setItem("login", "true");
+    sessionStorage.setItem("fromLogin", "true");
     window.location.href = "index.html";
   } else {
     alert("Username atau password salah!");
@@ -126,5 +132,11 @@ function login() {
 }
 </script>
 
+</script>
+<script>
+if (localStorage.getItem("login") === "true") {
+  window.location.href = "index.html";
+}
+</script>
 </body>
 </html>
