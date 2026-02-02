@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Login Inventaris Masjid</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #f9a825, #ffecb3, #6d4c41);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  width: 380px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 38px;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+}
+
+.logo {
+  text-align: center;
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  text-align: center;
+  color: #6d4c41;
+}
+
+p {
+  text-align: center;
+  font-size: 14px;
+  color: #8d6e63;
+  margin-bottom: 28px;
+}
+
+.input-group {
+  margin-bottom: 18px;
+}
+
+label {
+  font-size: 13px;
+  color: #5d4037;
+}
+
+input {
+  width: 100%;
+  padding: 13px;
+  border-radius: 10px;
+  border: 1px solid #d7ccc8;
+  margin-top: 6px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #f9a825;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, #f9a825, #6d4c41);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: #a1887f;
+  margin-top: 22px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-card">
+  <div class="logo">🕌</div>
+  <h2>Inventaris Masjid Al-Falah</h2>
+  <p>Silakan login untuk masuk dashboard</p>
+
+  <div class="input-group">
+    <label>Username</label>
+    <input type="text" id="username">
+  </div>
+
+  <div class="input-group">
+    <label>Password</label>
+    <input type="password" id="password">
+  </div>
+
+  <button onclick="login()">Masuk</button>
+
+  <div class="footer">
+    D3 Administrasi Logistik<br>
+    ULBI
+  </div>
+</div>
+
+<script>
+function login() {
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+
+  if (user === "Alfalah" && pass === "Alfalah151") {
+    localStorage.setItem("login", "true");
+    window.location.href = "index.html";
+  } else {
+    alert("Username atau password salah!");
+  }
+}
+</script>
+
+</body>
+</html>

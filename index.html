@@ -53,6 +53,17 @@ nav a:hover {
   text-decoration: underline;
 }
 
+/* LOGOUT */
+.logout {
+  float: right;
+  background: #fffde7;
+  color: #6d4c41;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
 /* CONTAINER */
 .container {
   padding: 25px;
@@ -114,6 +125,13 @@ canvas {
 
 <body>
 
+<!-- 🔐 CEK LOGIN (WAJIB) -->
+<script>
+if (localStorage.getItem("login") !== "true") {
+  window.location.href = "login.html";
+}
+</script>
+
 <header>
   <div class="header-content">
     <img src="logo.jpeg" class="logo">
@@ -127,6 +145,7 @@ canvas {
     <a href="#">Dashboard</a>
     <a href="#deskripsi">Tentang Masjid</a>
     <a href="#inventaris">Inventaris</a>
+    <span class="logout" onclick="logout()">Logout</span>
   </nav>
 </header>
 
@@ -136,13 +155,13 @@ canvas {
   <div class="card deskripsi" id="deskripsi">
     <h2>Tentang Masjid Al-Falah</h2>
     <p>
-      Masjid Al-Falah merupakan salah satu masjid yang aktif dalam menghidupkan kegiatan keagamaan dan sosial di tengah masyarakat. Dengan berlokasikan di  Bandung no.9, Jalan Sariasih 3, 40151, Bandung Jawa Barat. Masjid ini menjadi pusat ibadah sekaligus tempat berkumpulnya warga untuk mempererat silaturahmi. Suasana masjid yang tenang dan fasilitas yang memadai membuat jamaah merasa nyaman dalam beribadah maupun mengikuti kegiatan lainnya.
+      Masjid Al-Falah merupakan salah satu masjid yang aktif dalam menghidupkan kegiatan keagamaan dan sosial di tengah masyarakat. Dengan berlokasikan di Bandung no.9, Jalan Sariasih 3, 40151, Bandung Jawa Barat. Masjid ini menjadi pusat ibadah sekaligus tempat berkumpulnya warga untuk mempererat silaturahmi. Suasana masjid yang tenang dan fasilitas yang memadai membuat jamaah merasa nyaman dalam beribadah maupun mengikuti kegiatan lainnya.
     </p>
     <p>
       Melalui website resminya masjid Al-Falah menyediakan berbagai informasi penting mengenai inventarist yang ada di mesjid AL-Falah. Di mana dari website ini jamaah mesjid dan mengetahui inventaris yang ada di mesjid Al-Falah.
     </p>
     <p>
-Kegiatan yang rutin dilaksanakan di Masjid Al-Falah meliputi pengajian mingguan, kelas tahfidz, serta kegiatan sosial seperti santunan anak yatim dan bantuan untuk masyarakat kurang mampu. Pada bulan Ramadan, masjid ini semakin ramai dengan kegiatan buka puasa bersama, tarawih berjamaah, dan pesantren kilat untuk anak-anak.
+      Kegiatan yang rutin dilaksanakan di Masjid Al-Falah meliputi pengajian mingguan, kelas tahfidz, serta kegiatan sosial seperti santunan anak yatim dan bantuan untuk masyarakat kurang mampu. Pada bulan Ramadan, masjid ini semakin ramai dengan kegiatan buka puasa bersama, tarawih berjamaah, dan pesantren kilat untuk anak-anak.
     </p>
     <p>
       Dengan berbagai aktivitas tersebut, Masjid Al-Falah tidak hanya berperan sebagai tempat ibadah, tetapi juga sebagai pusat pembinaan umat dan wadah kebersamaan. Kehadirannya menjadi simbol semangat kebersamaan, dakwah, dan pelayanan sosial yang terus berkembang seiring dengan kebutuhan masyarakat.
@@ -177,6 +196,11 @@ Kegiatan yang rutin dilaksanakan di Masjid Al-Falah meliputi pengajian mingguan,
 </div>
 
 <script>
+function logout() {
+  localStorage.removeItem("login");
+  window.location.href = "login.html";
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
   const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4KHkq3bFj27S1xiW-bJuTZZfycMQUR3ryo8N1vWR2da8PKhv370nAZbO-zhKXZBXpduooaxOWNOR6/pub?gid=2102583138&single=true&output=csv";
@@ -185,7 +209,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(res => res.text())
     .then(text => {
 
-      // parser CSV yang aman
       function parseCSV(text) {
         const rows = [];
         let row = [];
@@ -195,9 +218,8 @@ document.addEventListener("DOMContentLoaded", function () {
         for (let i = 0; i < text.length; i++) {
           const char = text[i];
 
-          if (char === '"') {
-            insideQuotes = !insideQuotes;
-          } else if ((char === ',' || char === ';') && !insideQuotes) {
+          if (char === '"') insideQuotes = !insideQuotes;
+          else if ((char === ',' || char === ';') && !insideQuotes) {
             row.push(cell.trim());
             cell = "";
           } else if (char === '\n' && !insideQuotes) {
@@ -211,7 +233,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         if (cell) row.push(cell.trim());
         if (row.length) rows.push(row);
-
         return rows;
       }
 
@@ -251,12 +272,13 @@ document.addEventListener("DOMContentLoaded", function () {
             backgroundColor: "#f9a825"
           }]
         },
-        options: {
-          responsive: true
-        }
+        options: { responsive: true }
       });
 
     })
     .catch(err => console.error(err));
 });
 </script>
+
+</body>
+</html>
