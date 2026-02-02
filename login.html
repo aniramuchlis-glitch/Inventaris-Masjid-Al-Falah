@@ -13,7 +13,7 @@
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg, #001D39, #0A4174, #49769F, #BDD8E9);
+  background: linear-gradient(135deg, #f9a825, #ffecb3, #6d4c41);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,79 +21,68 @@ body {
 
 .login-card {
   width: 380px;
-  background: white;
-  border-radius: 16px;
-  padding: 35px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-  animation: fadeIn 0.8s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 38px;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.25);
 }
 
 .logo {
   text-align: center;
-  font-size: 48px;
+  font-size: 60px;
   margin-bottom: 10px;
 }
 
-.login-card h2 {
+h2 {
   text-align: center;
-  margin-bottom: 5px;
-  color: #d1140e;
+  color: #6d4c41;
 }
 
-.login-card p {
+p {
   text-align: center;
   font-size: 14px;
-  color: #666;
-  margin-bottom: 25px;
+  color: #8d6e63;
+  margin-bottom: 28px;
 }
 
 .input-group {
   margin-bottom: 18px;
 }
 
-.input-group label {
+label {
   font-size: 13px;
-  color: #555;
+  color: #5d4037;
 }
 
-.input-group input {
+input {
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-top: 5px;
+  padding: 13px;
+  border-radius: 10px;
+  border: 1px solid #d7ccc8;
+  margin-top: 6px;
 }
 
-.input-group input:focus {
+input:focus {
   outline: none;
-  border-color: #d10e0e;
+  border-color: #f9a825;
 }
 
 button {
   width: 100%;
   padding: 14px;
-  background: #8a0303;
+  background: linear-gradient(90deg, #f9a825, #6d4c41);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 16px;
   cursor: pointer;
-}
-
-button:hover {
-  background: #ffffff;
 }
 
 .footer {
   text-align: center;
   font-size: 12px;
-  color: #aaa;
-  margin-top: 20px;
+  color: #a1887f;
+  margin-top: 22px;
 }
 </style>
 </head>
@@ -103,22 +92,23 @@ button:hover {
 <div class="login-card">
   <div class="logo">🕌</div>
   <h2>Inventaris Masjid Al-Falah</h2>
-  <p>" Selamat Datang! "</p>
+  <p>Silakan login untuk masuk dashboard</p>
 
   <div class="input-group">
     <label>Username</label>
-    <input type="text" id="username" placeholder="Masukkan username">
+    <input type="text" id="username">
   </div>
 
   <div class="input-group">
     <label>Password</label>
-    <input type="password" id="password" placeholder="Masukkan password">
+    <input type="password" id="password">
   </div>
 
   <button onclick="login()">Masuk</button>
 
   <div class="footer">
-    1E | D3 Administrasi Logistik | Universitas Logistik dan Bisnis Internasional
+    D3 Administrasi Logistik<br>
+    ULBI
   </div>
 </div>
 
@@ -127,14 +117,9 @@ function login() {
   const user = document.getElementById("username").value;
   const pass = document.getElementById("password").value;
 
-  if (user === "" || pass === "") {
-    alert("Username dan password harus diisi!");
-    return;
-  }
-
-  // sementara (bisa diganti ke Apps Script)
   if (user === "Alfalah" && pass === "Alfalah151") {
-  window.location.href = "https://sites.google.com/view/datamasjidper/home";
+    localStorage.setItem("login", "true");
+    window.location.href = "index.html";
   } else {
     alert("Username atau password salah!");
   }

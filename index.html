@@ -2,144 +2,261 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Login Inventaris Masjid</title>
+<title>Dashboard Inventaris Masjid Al-Falah</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
-
 body {
   margin: 0;
-  height: 100vh;
-  background: linear-gradient(135deg, #001D39, #0A4174, #49769F, #BDD8E9);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #fff8e1;
+  color: #4e342e;
+}
+
+/* HEADER */
+header {
+  background: linear-gradient(90deg, #f9a825, #6d4c41);
+  padding: 25px;
+  color: white;
+}
+
+.header-content {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 25px;
 }
 
-.login-card {
-  width: 380px;
-  background: white;
-  border-radius: 16px;
-  padding: 35px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-  animation: fadeIn 0.8s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* LOGO BESAR */
 .logo {
-  text-align: center;
-  font-size: 48px;
-  margin-bottom: 10px;
+  width: 120px;
+  height: 120px;
+  background: white;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-.login-card h2 {
-  text-align: center;
-  margin-bottom: 5px;
-  color: #d1140e;
+/* NAVBAR */
+nav {
+  margin-top: 20px;
 }
 
-.login-card p {
-  text-align: center;
-  font-size: 14px;
-  color: #666;
+nav a {
+  color: #fffde7;
+  text-decoration: none;
+  margin-right: 18px;
+  font-weight: 600;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* CONTAINER */
+.container {
+  padding: 25px;
+  max-width: 1150px;
+  margin: auto;
+}
+
+/* CARD */
+.card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
   margin-bottom: 25px;
 }
 
-.input-group {
-  margin-bottom: 18px;
+/* TOTAL */
+.total {
+  font-size: 42px;
+  color: #f9a825;
+  margin: 0;
 }
 
-.input-group label {
-  font-size: 13px;
-  color: #555;
-}
-
-.input-group input {
+/* TABLE */
+table {
   width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th {
+  background: #f9a825;
+  color: #4e342e;
   padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-top: 5px;
 }
 
-.input-group input:focus {
-  outline: none;
-  border-color: #d10e0e;
-}
-
-button {
-  width: 100%;
-  padding: 14px;
-  background: #8a0303;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #ffffff;
-}
-
-.footer {
+td {
+  padding: 10px;
   text-align: center;
-  font-size: 12px;
-  color: #aaa;
-  margin-top: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background: #fffde7;
+}
+
+/* DESKRIPSI */
+.deskripsi p {
+  line-height: 1.8;
+  text-align: justify;
+}
+
+/* GRAFIK */
+canvas {
+  max-width: 100%;
 }
 </style>
 </head>
 
 <body>
 
-<div class="login-card">
-  <div class="logo">🕌</div>
-  <h2>Inventaris Masjid Al-Falah</h2>
-  <p>" Selamat Datang! "</p>
-
-  <div class="input-group">
-    <label>Username</label>
-    <input type="text" id="username" placeholder="Masukkan username">
+<header>
+  <div class="header-content">
+    <img src="logo.jpeg" class="logo">
+    <div>
+      <h1>Dashboard Inventaris Masjid Al-Falah</h1>
+      <p>Sistem Informasi Inventaris & Kegiatan Masjid</p>
+    </div>
   </div>
 
-  <div class="input-group">
-    <label>Password</label>
-    <input type="password" id="password" placeholder="Masukkan password">
+  <nav>
+    <a href="#">Dashboard</a>
+    <a href="#deskripsi">Tentang Masjid</a>
+    <a href="#inventaris">Inventaris</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <!-- DESKRIPSI -->
+  <div class="card deskripsi" id="deskripsi">
+    <h2>Tentang Masjid Al-Falah</h2>
+    <p>
+      Masjid Al-Falah merupakan salah satu masjid yang aktif dalam menghidupkan kegiatan keagamaan dan sosial di tengah masyarakat. Dengan berlokasikan di  Bandung no.9, Jalan Sariasih 3, 40151, Bandung Jawa Barat. Masjid ini menjadi pusat ibadah sekaligus tempat berkumpulnya warga untuk mempererat silaturahmi. Suasana masjid yang tenang dan fasilitas yang memadai membuat jamaah merasa nyaman dalam beribadah maupun mengikuti kegiatan lainnya.
+    </p>
+    <p>
+      Melalui website resminya masjid Al-Falah menyediakan berbagai informasi penting mengenai inventarist yang ada di mesjid AL-Falah. Di mana dari website ini jamaah mesjid dan mengetahui inventaris yang ada di mesjid Al-Falah.
+    </p>
+    <p>
+Kegiatan yang rutin dilaksanakan di Masjid Al-Falah meliputi pengajian mingguan, kelas tahfidz, serta kegiatan sosial seperti santunan anak yatim dan bantuan untuk masyarakat kurang mampu. Pada bulan Ramadan, masjid ini semakin ramai dengan kegiatan buka puasa bersama, tarawih berjamaah, dan pesantren kilat untuk anak-anak.
+    </p>
+    <p>
+      Dengan berbagai aktivitas tersebut, Masjid Al-Falah tidak hanya berperan sebagai tempat ibadah, tetapi juga sebagai pusat pembinaan umat dan wadah kebersamaan. Kehadirannya menjadi simbol semangat kebersamaan, dakwah, dan pelayanan sosial yang terus berkembang seiring dengan kebutuhan masyarakat.
+    </p>
   </div>
 
-  <button onclick="login()">Masuk</button>
-
-  <div class="footer">
-    1E | D3 Administrasi Logistik | Universitas Logistik dan Bisnis Internasional
+  <!-- TOTAL -->
+  <div class="card">
+    <h3>Total Jumlah Inventaris</h3>
+    <p class="total" id="total">0</p>
   </div>
+
+  <!-- GRAFIK -->
+  <div class="card">
+    <h3>Grafik Jumlah Inventaris</h3>
+    <canvas id="grafik"></canvas>
+  </div>
+
+  <!-- TABEL -->
+  <div class="card" id="inventaris">
+    <h3>Data Inventaris Masjid</h3>
+    <table id="tabel">
+      <tr>
+        <th>Tanggal</th>
+        <th>Nama Perabot</th>
+        <th>Jumlah</th>
+        <th>Kondisi</th>
+      </tr>
+    </table>
+  </div>
+
 </div>
 
 <script>
-function login() {
-  const user = document.getElementById("username").value;
-  const pass = document.getElementById("password").value;
+document.addEventListener("DOMContentLoaded", function () {
 
-  if (user === "" || pass === "") {
-    alert("Username dan password harus diisi!");
-    return;
-  }
+  const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4KHkq3bFj27S1xiW-bJuTZZfycMQUR3ryo8N1vWR2da8PKhv370nAZbO-zhKXZBXpduooaxOWNOR6/pub?gid=2102583138&single=true&output=csv";
 
-  // sementara (bisa diganti ke Apps Script)
-  if (user === "Alfalah" && pass === "Alfalah151") {
-  window.location.href = "https://sites.google.com/view/datamasjidper/home";
-  } else {
-    alert("Username atau password salah!");
-  }
-}
+  fetch(url)
+    .then(res => res.text())
+    .then(text => {
+
+      // parser CSV yang aman
+      function parseCSV(text) {
+        const rows = [];
+        let row = [];
+        let cell = "";
+        let insideQuotes = false;
+
+        for (let i = 0; i < text.length; i++) {
+          const char = text[i];
+
+          if (char === '"') {
+            insideQuotes = !insideQuotes;
+          } else if ((char === ',' || char === ';') && !insideQuotes) {
+            row.push(cell.trim());
+            cell = "";
+          } else if (char === '\n' && !insideQuotes) {
+            row.push(cell.trim());
+            rows.push(row);
+            row = [];
+            cell = "";
+          } else {
+            cell += char;
+          }
+        }
+        if (cell) row.push(cell.trim());
+        if (row.length) rows.push(row);
+
+        return rows;
+      }
+
+      const rows = parseCSV(text);
+      const table = document.getElementById("tabel");
+
+      let total = 0;
+      let labels = [];
+      let dataJumlah = [];
+
+      for (let i = 1; i < rows.length; i++) {
+        const [tanggal, nama, jumlahRaw, kondisi] = rows[i];
+        if (!tanggal || !nama) continue;
+
+        const jumlah = parseInt(jumlahRaw.replace(/\D/g, "")) || 0;
+
+        const row = table.insertRow();
+        row.insertCell(0).innerText = tanggal;
+        row.insertCell(1).innerText = nama;
+        row.insertCell(2).innerText = jumlah;
+        row.insertCell(3).innerText = kondisi;
+
+        total += jumlah;
+        labels.push(nama);
+        dataJumlah.push(jumlah);
+      }
+
+      document.getElementById("total").innerText = total;
+
+      new Chart(document.getElementById("grafik"), {
+        type: "bar",
+        data: {
+          labels,
+          datasets: [{
+            label: "Jumlah Inventaris",
+            data: dataJumlah,
+            backgroundColor: "#f9a825"
+          }]
+        },
+        options: {
+          responsive: true
+        }
+      });
+
+    })
+    .catch(err => console.error(err));
+});
 </script>
-
-</body>
-</html>
